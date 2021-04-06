@@ -1,49 +1,73 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPeople, loadDisplay } from '../actions/peopleAction';
+import VariantInput from './VariantInput';
+import checkItem from '../actions/checkAction';
 
-const FilterPanel = ({people}) => {
+const FilterPanel = () => {
+  const [checkedItems, setCheckedItems] = useState([]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchPeople());
+  }, [dispatch]);
 
-    const makeVariantsHandler = (arr, property) => {
-        let variants;
-        if (typeof arr[0][property] === "string" || typeof arr[0][property] === "number"){
-            variants = arr.reduce((acc, val) => {
-                if(!acc.includes(val[property])){
-                    acc.push(val[property])
-                };
-                return acc;
-            }, []);
+  useEffect(() => {
+    dispatch(loadDisplay());
+  }, [dispatch]);
+  const { displayPeople } = useSelector((state) => state.people);
+  useEffect(() => {
+    dispatch(checkItem(checkedItems));
+  }, [checkedItems]);
+
+  const makeVariantsHandler = (arr, property) => {
+    let variants;
+    if (typeof arr[0][property] === 'string' || typeof arr[0][property] === 'number') {
+      variants = arr.reduce((acc, val) => {
+        const key = val[property];
+        if (key in acc) {
+          acc[key] += 1;
         } else {
-            variants = arr.reduce((acc, val) => {
-                let string = val[property];
-                let city = string.city;
-                if(!acc.includes(city)){
-                    acc.push(city)
-                };
-                return acc;
-            }, []);
+          acc[key] = 1;
         }
-
-        return variants.map((v) => (
-            <label key={v}><input type="checkbox" name="checkbox" value={v} />{v}</label>
-        ))
+        return acc;
+      }, {});
+    } else {
+      variants = arr.reduce((acc, val) => {
+        const string = val[property];
+        const { city } = string;
+        if (city in acc) {
+          acc[city] += 1;
+        } else {
+          acc[city] = 1;
+        }
+        return acc;
+      }, {});
     }
+    return Object.entries(variants).map(([v, num]) => (
+      <VariantInput
+        key={v}
+        v={v}
+        num={num}
+        checkedItems={checkedItems}
+        setCheckedItems={setCheckedItems}
+      />
+    ));
+  };
 
-    return(
-        <div>
-            <h3>Filter</h3>
-            <div>
-                <h4>Gender</h4>
-                <div>{makeVariantsHandler(people, "gender")}</div>
-            </div>
-            <div>
-                <h4>Department</h4>
-                <div>{makeVariantsHandler(people, "department")}</div>
-            </div>
-            <div>
-                <h4>City</h4>
-                <div>{makeVariantsHandler(people, "address")}</div>
-            </div>
+  return (
+    <>
+      {displayPeople.length && (
+      <div className="filter-panel">
+        <h3>Filter</h3>
+        <div className="filters">
+          <div className="filter-item">{makeVariantsHandler(displayPeople, 'gender')}</div>
+          <div className="filter-item">{makeVariantsHandler(displayPeople, 'department')}</div>
+          <div className="filter-item">{makeVariantsHandler(displayPeople, 'address')}</div>
         </div>
-    )
-}
+      </div>
+      )}
+    </>
+  );
+};
 
 export default FilterPanel;

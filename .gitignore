@@ -8,6 +8,10 @@
 # testing
 /coverage
 
+# lints
+.eslintrc.js
+.prettierrc.json
+
 # production
 /build
 
