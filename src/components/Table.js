@@ -82,46 +82,50 @@ const Table = () => {
   };
 
   return (
-    <div>
-      <div className="table-panel">
-        <table>
-          <thead>
-            <tr>
-              <th>
-                Name
-                <button type="button" onClick={() => sortHandler('name', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
-                <button type="button" onClick={() => sortHandler('name', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
-              </th>
-              <th>
-                Age
-                <button type="button" onClick={() => sortHandler('age', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
-                <button type="button" onClick={() => sortHandler('age', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
-              </th>
-              <th>
-                Gender
-                <button type="button" onClick={() => sortHandler('gender', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
-                <button type="button" onClick={() => sortHandler('gender', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
-              </th>
-              <th>
-                Department
-                <button type="button" onClick={() => sortHandler('department', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
-                <button type="button" onClick={() => sortHandler('department', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
-              </th>
-              <th className="hide">
-                Address
-                <button type="button" onClick={() => sortHandler('address', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
-                <button type="button" onClick={() => sortHandler('address', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {displayPeople.length
-              ? displayPeople.map((person) => showTableData(person))
-              : people.map((person) => showTableData(person))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <>
+      {people.length
+        ? (
+          <div className="table-panel">
+            <table>
+              <thead>
+                <tr>
+                  <th>
+                    Name
+                    <button type="button" onClick={() => sortHandler('name', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
+                    <button type="button" onClick={() => sortHandler('name', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                  </th>
+                  <th>
+                    Age
+                    <button type="button" onClick={() => sortHandler('age', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
+                    <button type="button" onClick={() => sortHandler('age', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                  </th>
+                  <th>
+                    Gender
+                    <button type="button" onClick={() => sortHandler('gender', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
+                    <button type="button" onClick={() => sortHandler('gender', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                  </th>
+                  <th>
+                    Department
+                    <button type="button" onClick={() => sortHandler('department', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
+                    <button type="button" onClick={() => sortHandler('department', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                  </th>
+                  <th className="hide">
+                    Address
+                    <button type="button" onClick={() => sortHandler('address', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
+                    <button type="button" onClick={() => sortHandler('address', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {displayPeople.length
+                  ? displayPeople.map((person) => showTableData(person))
+                  : people.map((person) => showTableData(person))}
+              </tbody>
+            </table>
+          </div>
+        )
+        : <div className="loading" />}
+    </>
   );
 };
 
