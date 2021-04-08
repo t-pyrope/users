@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { fetchPeople, loadDisplay } from '../actions/peopleAction';
 
 const Table = () => {
-  const [peopleTable, setPeopleTable] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPeople());
   }, [dispatch]);
 
   const { people } = useSelector((state) => state.people);
-  useEffect(() => {
-    dispatch(loadDisplay(people));
-  }, [dispatch, people]);
   const { displayPeople } = useSelector((state) => state.people);
 
   const showTableData = (person) => {
@@ -35,7 +31,7 @@ const Table = () => {
   };
 
   const sortHandler = (property, direction) => {
-    const sortedPeople = [...displayPeople];
+    const sortedPeople = displayPeople.length ? [...displayPeople] : [...people];
     switch (property) {
       case 'age':
         if (direction === 'asc') {
@@ -81,14 +77,12 @@ const Table = () => {
         return [...sortedPeople];
     }
 
-    setPeopleTable(sortedPeople);
+    dispatch(loadDisplay(sortedPeople));
     return null;
   };
 
   return (
-    <>
-      {displayPeople.length
-    && (
+    <div>
       <div className="table-panel">
         <table>
           <thead>
@@ -121,14 +115,13 @@ const Table = () => {
             </tr>
           </thead>
           <tbody>
-            {peopleTable.length
-              ? peopleTable.map((person) => showTableData(person))
-              : displayPeople.map((person) => showTableData(person))}
+            {displayPeople.length
+              ? displayPeople.map((person) => showTableData(person))
+              : people.map((person) => showTableData(person))}
           </tbody>
         </table>
       </div>
-    )}
-    </>
+    </div>
   );
 };
 

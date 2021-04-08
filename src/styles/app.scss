@@ -81,7 +81,7 @@ button {
         border: 1px solid rgb(241, 231, 239);
     }
 
-    td:nth-child(2n-1) {
+    tr:nth-child(2n) {
         background-color: rgb(241, 231, 239);
         border: 1px solid white;
     }

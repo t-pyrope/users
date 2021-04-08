@@ -1,23 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPeople, loadDisplay } from '../actions/peopleAction';
+import { fetchPeople } from '../actions/peopleAction';
 import VariantInput from './VariantInput';
-import checkItem from '../actions/checkAction';
 
 const FilterPanel = () => {
-  const [checkedItems, setCheckedItems] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPeople());
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(loadDisplay());
-  }, [dispatch]);
+  const { people } = useSelector((state) => state.people);
   const { displayPeople } = useSelector((state) => state.people);
-  useEffect(() => {
-    dispatch(checkItem(checkedItems));
-  }, [checkedItems]);
 
   const makeVariantsHandler = (arr, property) => {
     let variants;
@@ -43,26 +36,25 @@ const FilterPanel = () => {
         return acc;
       }, {});
     }
+
     return Object.entries(variants).map(([v, num]) => (
       <VariantInput
         key={v}
         v={v}
         num={num}
-        checkedItems={checkedItems}
-        setCheckedItems={setCheckedItems}
       />
     ));
   };
 
   return (
     <>
-      {displayPeople.length && (
+      {people.length && (
       <div className="filter-panel">
         <h3>Filter</h3>
         <div className="filters">
-          <div className="filter-item">{makeVariantsHandler(displayPeople, 'gender')}</div>
-          <div className="filter-item">{makeVariantsHandler(displayPeople, 'department')}</div>
-          <div className="filter-item">{makeVariantsHandler(displayPeople, 'address')}</div>
+          <div className="filter-item">{displayPeople.length ? makeVariantsHandler(displayPeople, 'gender') : makeVariantsHandler(people, 'gender')}</div>
+          <div className="filter-item">{displayPeople.length ? makeVariantsHandler(displayPeople, 'department') : makeVariantsHandler(people, 'department')}</div>
+          <div className="filter-item">{displayPeople.length ? makeVariantsHandler(displayPeople, 'address') : makeVariantsHandler(people, 'address')}</div>
         </div>
       </div>
       )}
