@@ -1,8 +1,8 @@
-const checkItem = (checkedItems) => (dispatch) => {
+const checkItem = (gender, department, city) => (dispatch) => {
   dispatch({
     type: 'CHECK_ITEM',
     payload: {
-      checkedItems,
+      gender, department, city,
     },
   });
 };

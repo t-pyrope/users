@@ -90,29 +90,49 @@ const Table = () => {
               <thead>
                 <tr>
                   <th>
-                    Name
-                    <button type="button" onClick={() => sortHandler('name', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
-                    <button type="button" onClick={() => sortHandler('name', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                    <div className="col-name">
+                      <p>Name</p>
+                      <div className="button-group">
+                        <button type="button" onClick={() => sortHandler('name', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
+                        <button type="button" onClick={() => sortHandler('name', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                      </div>
+                    </div>
                   </th>
                   <th>
-                    Age
-                    <button type="button" onClick={() => sortHandler('age', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
-                    <button type="button" onClick={() => sortHandler('age', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                    <div className="col-name">
+                      <p>Age</p>
+                      <div className="button-group">
+                        <button type="button" onClick={() => sortHandler('age', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
+                        <button type="button" onClick={() => sortHandler('age', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                      </div>
+                    </div>
                   </th>
                   <th>
-                    Gender
-                    <button type="button" onClick={() => sortHandler('gender', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
-                    <button type="button" onClick={() => sortHandler('gender', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                    <div className="col-name">
+                      <p>Gender</p>
+                      <div className="button-group">
+                        <button type="button" onClick={() => sortHandler('gender', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
+                        <button type="button" onClick={() => sortHandler('gender', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                      </div>
+                    </div>
                   </th>
                   <th>
-                    Department
-                    <button type="button" onClick={() => sortHandler('department', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
-                    <button type="button" onClick={() => sortHandler('department', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                    <div className="col-name">
+                      <p>Department</p>
+                      <div className="button-group">
+                        <button type="button" onClick={() => sortHandler('department', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
+                        <button type="button" onClick={() => sortHandler('department', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                      </div>
+                    </div>
                   </th>
                   <th className="hide">
-                    Address
-                    <button type="button" onClick={() => sortHandler('address', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
-                    <button type="button" onClick={() => sortHandler('address', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                    <div className="col-name">
+                      <p>Address</p>
+                      <div className="button-group">
+                        <button type="button" onClick={() => sortHandler('address', 'asc')} aria-label="ascending"><FontAwesomeIcon icon={faArrowUp} /></button>
+                        <button type="button" onClick={() => sortHandler('address', 'desc')} aria-label="descending"><FontAwesomeIcon icon={faArrowDown} /></button>
+                      </div>
+                    </div>
                   </th>
                 </tr>
               </thead>

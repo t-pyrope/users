@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { fetchPeople, loadDisplay } from '../actions/peopleAction';
 import checkItem from '../actions/checkAction';
 
-const VariantInput = ({ v, num }) => {
+const VariantInput = ({ v, num, property }) => {
   const [toggle, setToggle] = useState(false);
-  const { checkedItems } = useSelector((state) => state.checked);
+  const { gender, department, city } = useSelector((state) => state.checked);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -17,58 +17,43 @@ const VariantInput = ({ v, num }) => {
   const sortPeople = (inputValue) => {
     const people2 = [...people];
 
-    const checkedItems2 = [...checkedItems];
+    let gender2 = [...gender];
+    let department2 = [...department];
+    let city2 = [...city];
+
     if (!toggle) {
-      checkedItems2.push(inputValue);
+      if (property === 'gender') {
+        gender2.push(inputValue);
+      }
+      if (property === 'department') {
+        department2.push(inputValue);
+      }
+      if (property === 'address') {
+        city2.push(inputValue);
+      }
     } else {
-      const i = checkedItems2.indexOf(inputValue);
-      checkedItems2.splice(i, 1);
-    }
-    if (checkedItems2.length === 0) {
-      dispatch(checkItem([]));
-      dispatch(loadDisplay(people2));
-      return;
-    }
-    const ids = [];
-
-    people2.map((person) => {
-      checkedItems2.forEach((item) => {
-        const values = Object.values(person);
-        if (values.includes(item) || values[5].city === item) {
-          ids.push(person.id);
-        }
-      });
-      return null;
-    });
-
-    const duplicates = ids.reduce((acc, val) => {
-      if (!acc[val]) {
-        acc[val] = 1;
-      } else {
-        acc[val] += 1;
+      if (property === 'gender') {
+        gender2 = [];
       }
-      return acc;
-    }, {});
-
-    const finalIds = [];
-
-    Object.keys(duplicates).forEach((key) => {
-      const value = duplicates[key];
-      if (value === checkedItems2.length) {
-        finalIds.push(key);
+      if (property === 'department') {
+        department2 = [];
       }
-    });
+      if (property === 'address') {
+        city2 = [];
+      }
+    }
 
-    const finalPeople = [];
-    people2.map((person) => {
-      if (finalIds.includes(person.id)) {
-        finalPeople.push(person);
+    const filteredPeople = people2.filter((person) => {
+      if ((gender2.length === 0 || person.gender === gender2[0])
+        && (department2.length === 0 || person.department === department2[0])
+        && (city2.length === 0 || person.address.city === city2[0])) {
+        return person;
       }
       return null;
     });
 
-    dispatch(checkItem(checkedItems2));
-    dispatch(loadDisplay(finalPeople));
+    dispatch(checkItem(gender2, department2, city2));
+    dispatch(loadDisplay(filteredPeople));
   };
 
   const inputHandler = (e) => {
@@ -92,6 +77,7 @@ const VariantInput = ({ v, num }) => {
 VariantInput.propTypes = {
   v: PropTypes.string.isRequired,
   num: PropTypes.number.isRequired,
+  property: PropTypes.string.isRequired,
 };
 
 export default VariantInput;

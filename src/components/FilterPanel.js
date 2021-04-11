@@ -42,6 +42,7 @@ const FilterPanel = () => {
         key={v}
         v={v}
         num={num}
+        property={property}
       />
     ));
   };
