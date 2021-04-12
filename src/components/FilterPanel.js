@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPeople } from '../actions/peopleAction';
 import VariantInput from './VariantInput';
 
 const FilterPanel = () => {
+  const [stablePeople, setStablePeople] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchPeople());
@@ -11,6 +12,14 @@ const FilterPanel = () => {
 
   const { people } = useSelector((state) => state.people);
   const { displayPeople } = useSelector((state) => state.people);
+
+  useEffect(() => {
+    if (stablePeople.length === displayPeople.length) {
+      return setStablePeople([...stablePeople]);
+    }
+
+    return setStablePeople([...displayPeople]);
+  }, [displayPeople]);
 
   const makeVariantsHandler = (arr, property) => {
     let variants;
@@ -53,9 +62,9 @@ const FilterPanel = () => {
       <div className="filter-panel">
         <h3>Filter</h3>
         <div className="filters">
-          <div className="filter-item">{displayPeople.length ? makeVariantsHandler(displayPeople, 'gender') : makeVariantsHandler(people, 'gender')}</div>
-          <div className="filter-item">{displayPeople.length ? makeVariantsHandler(displayPeople, 'department') : makeVariantsHandler(people, 'department')}</div>
-          <div className="filter-item">{displayPeople.length ? makeVariantsHandler(displayPeople, 'address') : makeVariantsHandler(people, 'address')}</div>
+          <div className="filter-item">{stablePeople.length ? makeVariantsHandler(stablePeople, 'gender') : makeVariantsHandler(people, 'gender')}</div>
+          <div className="filter-item">{stablePeople.length ? makeVariantsHandler(stablePeople, 'department') : makeVariantsHandler(people, 'department')}</div>
+          <div className="filter-item">{stablePeople.length ? makeVariantsHandler(stablePeople, 'address') : makeVariantsHandler(people, 'address')}</div>
         </div>
       </div>
       )}

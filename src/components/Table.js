@@ -32,6 +32,7 @@ const Table = () => {
 
   const sortHandler = (property, direction) => {
     const sortedPeople = displayPeople.length ? [...displayPeople] : [...people];
+    const variants = [];
     switch (property) {
       case 'age':
         if (direction === 'asc') {
@@ -50,6 +51,15 @@ const Table = () => {
         }
         break;
       case 'gender':
+        sortedPeople.map((person) => {
+          if (!variants.includes(person.gender)) {
+            variants.push(person.gender);
+          }
+          return variants;
+        });
+        if (variants.length <= 1) {
+          return null;
+        }
         if (direction === 'asc') {
           sortedPeople.sort((a, b) => ((a.gender > b.gender) ? 1 : -1));
         }
@@ -58,6 +68,15 @@ const Table = () => {
         }
         break;
       case 'department':
+        sortedPeople.map((person) => {
+          if (!variants.includes(person.department)) {
+            variants.push(person.department);
+          }
+          return variants;
+        });
+        if (variants.length <= 1) {
+          return null;
+        }
         if (direction === 'asc') {
           sortedPeople.sort((a, b) => ((a.department > b.department) ? 1 : -1));
         }
