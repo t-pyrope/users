@@ -58,16 +58,17 @@ const FilterPanel = () => {
 
   return (
     <>
-      {people.length && (
-      <div className="filter-panel">
-        <h3>Filter</h3>
-        <div className="filters">
-          <div className="filter-item">{stablePeople.length ? makeVariantsHandler(stablePeople, 'gender') : makeVariantsHandler(people, 'gender')}</div>
-          <div className="filter-item">{stablePeople.length ? makeVariantsHandler(stablePeople, 'department') : makeVariantsHandler(people, 'department')}</div>
-          <div className="filter-item">{stablePeople.length ? makeVariantsHandler(stablePeople, 'address') : makeVariantsHandler(people, 'address')}</div>
+      {people.length ? (
+        <div className="filter-panel">
+          <h3>Filter</h3>
+          <div className="filters">
+            <div className="filter-item">{stablePeople.length ? makeVariantsHandler(stablePeople, 'gender') : makeVariantsHandler(people, 'gender')}</div>
+            <div className="filter-item">{stablePeople.length ? makeVariantsHandler(stablePeople, 'department') : makeVariantsHandler(people, 'department')}</div>
+            <div className="filter-item">{stablePeople.length ? makeVariantsHandler(stablePeople, 'address') : makeVariantsHandler(people, 'address')}</div>
+          </div>
         </div>
-      </div>
-      )}
+      )
+        : <div className="loading" />}
     </>
   );
 };
