@@ -63,8 +63,8 @@ const VariantInput = ({ v, num, property }) => {
   };
 
   return (
-    <label htmlFor={`checkbox${v}`} key={v} className="filter-variant">
-      <input type="checkbox" name={`checkbox-${v.toLowerCase()}`} value={v} onChange={(e) => inputHandler(e)} onKeyDown={(e) => inputHandler(e)} checked={toggle ? 'checked' : ''} />
+    <label htmlFor={`checkbox-${v.toLowerCase()}`} key={v} className="filter-variant">
+      <input type="checkbox" name={`checkbox-${v.toLowerCase()}`} id={`checkbox-${v.toLowerCase()}`} value={v} onChange={(e) => inputHandler(e)} onKeyDown={(e) => inputHandler(e)} checked={toggle ? 'checked' : ''} />
       {v}
       {' '}
       (
