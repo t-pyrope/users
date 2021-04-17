@@ -31,24 +31,27 @@ const Table = () => {
     );
   };
 
+  const sortPeople = (sortedPeople, direction, callbackAsc, callbackDesc) => {
+    if (direction === 'asc') {
+      sortedPeople.sort(callbackAsc);
+    }
+    if (direction === 'desc') {
+      sortedPeople.sort(callbackDesc);
+    }
+  };
+
   const sortHandler = (property, direction) => {
     const sortedPeople = displayPeople.length ? [...displayPeople] : [...people];
     const variants = [];
     if (property === 'name') {
-      if (direction === 'asc') {
-        sortedPeople.sort((a, b) => ((a.name > b.name) ? 1 : -1));
-      }
-      if (direction === 'desc') {
-        sortedPeople.sort((a, b) => ((b.name > a.name) ? 1 : -1));
-      }
+      sortPeople(sortedPeople, direction,
+        (a, b) => ((a.name > b.name) ? 1 : -1),
+        (a, b) => ((b.name > a.name) ? 1 : -1));
     }
     if (property === 'age') {
-      if (direction === 'asc') {
-        sortedPeople.sort((a, b) => { return a.age - b.age; });
-      }
-      if (direction === 'desc') {
-        sortedPeople.sort((a, b) => { return b.age - a.age; });
-      }
+      sortPeople(sortedPeople, direction,
+        (a, b) => a.age - b.age,
+        (a, b) => b.age - a.age);
     }
     if (property === 'gender' || property === 'department') {
       sortedPeople.map((person) => {
@@ -60,20 +63,14 @@ const Table = () => {
       if (variants.length <= 1) {
         return null;
       }
-      if (direction === 'asc') {
-        sortedPeople.sort((a, b) => ((a[property] > b[property]) ? 1 : -1));
-      }
-      if (direction === 'desc') {
-        sortedPeople.sort((a, b) => ((b[property] > a[property]) ? 1 : -1));
-      }
+      sortPeople(sortedPeople, direction,
+        (a, b) => ((a[property] > b[property]) ? 1 : -1),
+        (a, b) => ((b[property] > a[property]) ? 1 : -1));
     }
     if (property === 'address') {
-      if (direction === 'asc') {
-        sortedPeople.sort((a, b) => ((`${a.address.city}${a.address.street}` > `${b.address.city}${b.address.street}`) ? 1 : -1));
-      }
-      if (direction === 'desc') {
-        sortedPeople.sort((a, b) => ((`${b.address.city}${b.address.street}` > `${a.address.city}${a.address.street}`) ? 1 : -1));
-      }
+      sortPeople(sortedPeople, direction,
+        (a, b) => ((`${a.address.city}${a.address.street}` > `${b.address.city}${b.address.street}`) ? 1 : -1),
+        (a, b) => ((`${b.address.city}${b.address.street}` > `${a.address.city}${a.address.street}`) ? 1 : -1));
     }
     dispatch(loadDisplay(sortedPeople));
     return null;
