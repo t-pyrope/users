@@ -87,7 +87,7 @@ const Table = () => {
 
   const tableHeadHandler = (title, property) => {
     return (
-      <th>
+      <th scope="col">
         <div className="col-name">
           <p>{title}</p>
           {buttonGroupHandler(property)}
@@ -101,14 +101,14 @@ const Table = () => {
       {people.length
         ? (
           <div className="table-panel">
-            <table>
+            <table summary="A table with IT developers from different countries. Column first contains their names. Columns second contains their age. Columns third contains their gender. Column fourth contains the info about their IT specialization (department). Columns fifth has an information about their address. You can filter each column both in ascending and in descending order.">
               <thead>
                 <tr>
                   {tableHeadHandler('Name', 'name')}
                   {tableHeadHandler('Age', 'age')}
                   {tableHeadHandler('Gender', 'gender')}
                   {tableHeadHandler('Department', 'department')}
-                  <th className="hide">
+                  <th className="hide" scope="col">
                     <div className="col-name">
                       <p>Address</p>
                       {buttonGroupHandler('address')}
